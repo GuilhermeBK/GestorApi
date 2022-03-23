@@ -11,6 +11,7 @@
 	<groupId>com.br.gestor</groupId>
 	<artifactId>GestorFinanceiro-api</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>GestorFinanceiro-api</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
