@@ -19,7 +19,6 @@ import org.springframework.stereotype.Component;
 import com.br.gestor.config.property.GestorFinanceiroApiProperty;
 
 @Component
-@Qualifier
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsFilter implements Filter {
 
