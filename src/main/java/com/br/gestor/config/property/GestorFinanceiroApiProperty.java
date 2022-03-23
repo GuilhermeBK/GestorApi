@@ -1,6 +1,7 @@
 package com.br.gestor.config.property;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @ConfigurationProperties("gestorFinanceiro")
@@ -9,6 +10,7 @@ public class GestorFinanceiroApiProperty {
 
 	private String originPermitida = "http://localhost:8000";
 	
+	@Bean
 	public String getOriginPermitida() {
 		return originPermitida;
 	}
