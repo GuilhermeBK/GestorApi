@@ -3,31 +3,28 @@ package com.br.gestor.config.property;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-@ConfigurationProperties("gestorFinanceiro")
+@ConfigurationProperties("gestorfinanceiro")
 @Component
 public class GestorFinanceiroApiProperty {
 
 	private String originPermitida = "http://localhost:8000";
-	
+
+	private final Seguranca seguranca = new Seguranca();
+
+	public Seguranca getSeguranca() {
+		return seguranca;
+	}
+
 	public String getOriginPermitida() {
 		return originPermitida;
 	}
-
 
 	public void setOriginPermitida(String originPermitida) {
 		this.originPermitida = originPermitida;
 	}
 
+	public static class Seguranca {
 
-	private final Seguranca seguranca = new Seguranca();
-	
-	public Seguranca getSeguranca() {
-		return seguranca;
-	}
-
-
-	public static class Seguranca{
-		
 		private boolean enableHttps;
 
 		public boolean isEnableHttps() {
@@ -37,8 +34,7 @@ public class GestorFinanceiroApiProperty {
 		public void setEnableHttps(boolean enableHttps) {
 			this.enableHttps = enableHttps;
 		}
-		
-	
-	
+
 	}
+		
 }
