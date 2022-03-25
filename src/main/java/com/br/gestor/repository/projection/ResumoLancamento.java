@@ -3,6 +3,7 @@ package com.br.gestor.repository.projection;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.br.gestor.model.Lancamento;
 import com.br.gestor.model.tipoLancamento;
 
 public class ResumoLancamento {
@@ -28,6 +29,19 @@ public class ResumoLancamento {
 		this.categoria = categoria;
 		this.pessoa = pessoa;
 
+	}
+	
+	//usado para resumir de forma mais simples
+	public ResumoLancamento(Lancamento lancamento){
+		this.codigo = lancamento.getCodigo();
+		this.descricao = lancamento.getDescricao();
+		this.dataVencimento = lancamento.getDataVencimento();
+		this.dataPagamento = lancamento.getDataPagamento();
+		this.valor = lancamento.getValor();
+		this.tipo = lancamento.getTipo();
+		this.categoria = lancamento.getCategoria().getNome();
+		this.pessoa = lancamento.getPessoa().getNome();
+		
 	}
 
 	public Long getCodigo() {
