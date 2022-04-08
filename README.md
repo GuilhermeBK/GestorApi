@@ -9,15 +9,15 @@ Estou atualizando para 2.5.0, principalmente questoes de segurança.
 
 
 # Tecnologias usadas
-Spring boot 2.5.0
-Java 11
-JPA
-Criteria do JPA
-Hibernate
-Deploy no heroku, bd jawsbd mysql
-JWT
-OAuth2
-Relatorios em PDF com Jaspersoft
+- ``Spring boot 2.5.0 ``
+- `` Java 11 ``
+- `` JPA ``
+- `` Criteria do JPA ``
+- `` Hibernate ``
+- `` Deploy no heroku, bd jawsbd mysql ``
+- `` JWT ``
+- `` OAuth2 ``
+- `` Relatorios em PDF com Jaspersoft ``
 
 # Necessario para rodar
 Java 11
