@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import com.br.gestor.model.Lancamento;
-import com.br.gestor.model.tipoLancamento;
+import com.br.gestor.model.TipoLancamento;
 
 public class ResumoLancamento {
 
@@ -13,12 +13,12 @@ public class ResumoLancamento {
 	private LocalDate dataVencimento;
 	private LocalDate dataPagamento;
 	private BigDecimal valor;
-	private tipoLancamento tipo;
+	private TipoLancamento tipo;
 	private String categoria;
 	private String pessoa;
 
 	public ResumoLancamento(Long codigo, String descricao, LocalDate dataVencimento, LocalDate dataPagamento,
-			BigDecimal valor, tipoLancamento tipo, String categoria, String pessoa) {
+			BigDecimal valor, TipoLancamento tipo, String categoria, String pessoa) {
 		super();
 		this.codigo = codigo;
 		this.descricao = descricao;
@@ -84,11 +84,11 @@ public class ResumoLancamento {
 		this.valor = valor;
 	}
 
-	public tipoLancamento getTipo() {
+	public TipoLancamento getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(tipoLancamento tipo) {
+	public void setTipo(TipoLancamento tipo) {
 		this.tipo = tipo;
 	}
 

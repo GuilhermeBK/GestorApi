@@ -1,5 +1,6 @@
 package com.br.gestor.resource;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -40,6 +42,8 @@ public class PessoasResource {
 	
 	@Autowired
 	private ApplicationEventPublisher publisher;
+	
+	
 	
 	@GetMapping
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and hasAuthority('SCOPE_read')")

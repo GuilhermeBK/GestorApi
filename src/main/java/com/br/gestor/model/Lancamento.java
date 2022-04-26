@@ -40,7 +40,7 @@ public class Lancamento {
 	private String observacao;
 
 	@Enumerated(EnumType.STRING)
-	private tipoLancamento tipo;
+	private TipoLancamento tipo;
 
 	@ManyToOne
 	@JoinColumn(name = "codigo_categoria")
@@ -98,11 +98,11 @@ public class Lancamento {
 		this.observacao = observacao;
 	}
 
-	public tipoLancamento getTipo() {
+	public TipoLancamento getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(tipoLancamento tipo) {
+	public void setTipo(TipoLancamento tipo) {
 		this.tipo = tipo;
 	}
 
