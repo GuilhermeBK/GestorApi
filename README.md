@@ -4,7 +4,7 @@
 <img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge"/>
 </p>
 
-Software pensando para gestao de finanças pessoais/empresarial. Feito em 2019/2020 em spring 2.1.x 
+Software pensando para gestao de finanças pessoais/empresarial. Feito em 2019/2020 com spring boot 2.1.x 
 Estou atualizando para 2.5.0, principalmente questoes de segurança.
 
 
