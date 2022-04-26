@@ -356,3 +356,17 @@ Lancamentos de ativos e passivos
                 }
 
               }
+              
+### Baixar PDF por pessoa por data [GET http://localhost:8080/lancamento/relatorios/por-pessoa?inicio=01-01-2018&fim=12-12-2022]
+
++ Request (application/json)
+
+   + Headers
+
+            Authorization: Bearer [access_token]
+            
+            +Params
+            inicio=01-01-2018
+            fim=12-12-2022
+            
+   
