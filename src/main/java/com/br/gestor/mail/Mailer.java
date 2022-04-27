@@ -1,18 +1,16 @@
 package com.br.gestor.mail;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -20,7 +18,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import com.br.gestor.model.Lancamento;
-import com.br.gestor.repository.LancamentoRepository;
+import com.br.gestor.model.Usuario;
 
 /*
  * A FUNÇÃO DO GOOGLE POR AUTENTICACAO BASICA POR APPS DE TERCEIROS PAROU DE FUNCIONAR
@@ -56,6 +54,27 @@ public class Mailer {
 ////					"Testando", template, values);
 ////		System.out.println("Terminado o envio de email");
 ////		}
+	
+	public void avisarSobreLancamentosVencidos(
+			List<Lancamento> vencidos, List<Usuario> destinatarios) {
+		
+		String template = "mail/aviso-lancamentos-vencidos.html";
+		
+		Map<String, Object> variaveis = new HashMap<>();
+		variaveis.put("lancamentos", vencidos);
+		
+		//TRANSFORMA LISTA DE OBJ USUARIO EM STRING
+		List<String> emails = destinatarios
+				.stream().map(usuario -> usuario.getEmail()).collect(Collectors.toList());
+		
+		try {
+			this.enviarEmail("guilhermekirsch12@gmail.com", emails, "Lançamentos vencidos", template, variaveis);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 	public void enviarEmail(String remetente,
 			List<String> destinatarios, String assunto,

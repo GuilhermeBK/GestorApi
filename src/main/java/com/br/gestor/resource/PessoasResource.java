@@ -54,15 +54,15 @@ public class PessoasResource {
 	@PostMapping
 	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_PESSOA') and hasAuthority('SCOPE_write')")
 	public ResponseEntity<Pessoa> criar(@Valid @RequestBody Pessoa pessoa, HttpServletResponse response) {
-		Pessoa pessoaSalva = pessoaRepository.save(pessoa);
+		Pessoa pessoaSalva = pessoaService.save(pessoa);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, pessoaSalva.getCodigo()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(pessoaSalva);
 	}
 
 	@GetMapping("/{codigo}")
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and hasAuthority('SCOPE_read')")
-	public ResponseEntity<Pessoa> listarPorId(@PathVariable Long id){
-		Optional<Pessoa> pessoaPorId = pessoaRepository.findById(id);
+	public ResponseEntity<Pessoa> listarPorId(@PathVariable Long codigo){
+		Optional<Pessoa> pessoaPorId = pessoaRepository.findById(codigo);
 		
 		if (pessoaPorId.isPresent()) {
 			return ResponseEntity.ok(pessoaPorId.get());

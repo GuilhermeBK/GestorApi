@@ -9,6 +9,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -16,10 +18,13 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.br.gestor.dto.LancamentoEstatisticaPessoa;
+import com.br.gestor.mail.Mailer;
 import com.br.gestor.model.Lancamento;
 import com.br.gestor.model.Pessoa;
+import com.br.gestor.model.Usuario;
 import com.br.gestor.repository.LancamentoRepository;
 import com.br.gestor.repository.PessoaRepository;
+import com.br.gestor.repository.UsuarioRepository;
 import com.br.gestor.service.exception.PessoaInexistenteOuInativaException;
 
 import net.sf.jasperreports.engine.JRException;
@@ -31,16 +36,56 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 @Service
 public class LancamentoService {
 
+	private static final String DESTINATARIOS = "ROLE_PESQUISAR_LANCAMENTO";
+	
+	private static final Logger log = LoggerFactory.getLogger(LancamentoService.class);
+	
 	@Autowired
 	private PessoaRepository pessoaRepository;
 	
 	@Autowired
 	private LancamentoRepository lancamentoRepository;
 	
-//	@Scheduled(cron = "")
-//	public void avisarSobreLancamentosVencidos() {
-//		System.out.println("----------------------------------------executando");
-//	}
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private Mailer mailer;
+	
+	
+	//@Scheduled(cron = "0 0 6 * * *") envia todo dia as 6 da manha
+	//@Scheduled(fixedDelay = 5000) envia a cara 5 segundos
+	public void avisarSobreLancamentosVencidos() {
+		if (log.isDebugEnabled()) {
+			log.debug("iniciando envio de emails");
+			
+		}
+		
+		List<Lancamento> vencidos = lancamentoRepository
+				.findByDataVencimentoLessThanEqualAndDataPagamentoIsNull(LocalDate.now());
+		
+		if (vencidos.isEmpty()) {
+			log.info("Sem lançamentos vencidos");
+			//nao envia o email
+			return;
+		}
+		
+		log.info("Existem {} lançamentos vencidos", vencidos.size());
+		
+		
+		List<Usuario> destinatarios = usuarioRepository
+				.findByPermissoesDescricao(DESTINATARIOS);
+		
+		if (destinatarios.isEmpty()) {
+			log.warn("Existem lançamentos vencidos, mas o sistema nao tem usuarios");
+			//nao envia o email
+			return;
+		}
+		
+		mailer.avisarSobreLancamentosVencidos(vencidos, destinatarios);
+		
+		log.info("envio de email concluido");
+	}
 	
 	public byte[] relatorioPorPessoa(LocalDate inicio, LocalDate fim) throws JRException {
 		List<LancamentoEstatisticaPessoa> dados = lancamentoRepository.porPessoa(inicio, fim);

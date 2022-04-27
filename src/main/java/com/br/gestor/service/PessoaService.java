@@ -2,6 +2,8 @@ package com.br.gestor.service;
 
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -21,8 +23,12 @@ public class PessoaService {
 		Pessoa pessoaSalva = pessoaRepository.findById(codigo).
 				orElseThrow(() -> new EmptyResultDataAccessException(1));
 		
-		//copia os dados e ignora o campo do codigo
-		BeanUtils.copyProperties(pessoa, pessoaSalva, "codigo");
+		pessoaSalva.getContatos().clear();
+		pessoaSalva.getContatos().addAll(pessoa.getContatos());
+		pessoaSalva.getContatos().forEach(contatos -> contatos.setPessoa(pessoaSalva));
+		
+		
+		BeanUtils.copyProperties(pessoa, pessoaSalva, "codigo", "contatos");
 		
 		return pessoaRepository.save(pessoaSalva);
 	}
@@ -44,6 +50,14 @@ public class PessoaService {
 		} else {
 			return ResponseEntity.noContent().build();
 		}
+		
+	}
+
+	//seta o obj pessoa dessa forma, pois o json ignora o obj pessoa na classe Contato
+	public Pessoa save(Pessoa pessoa) {
+		pessoa.getContatos().forEach(contatos -> contatos.setPessoa(pessoa));
+		
+		return pessoaRepository.save(pessoa);
 		
 	}
 

@@ -44,7 +44,7 @@ import com.br.gestor.service.LancamentoService;
 import com.br.gestor.service.exception.PessoaInexistenteOuInativaException;
 
 @RestController
-@RequestMapping("/lancamento")
+@RequestMapping("/lancamentos")
 public class LancamentoResource {
 
 	@Autowired

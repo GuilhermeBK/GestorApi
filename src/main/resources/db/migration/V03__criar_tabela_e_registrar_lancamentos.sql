@@ -11,3 +11,4 @@ CREATE TABLE lancamento (
 	FOREIGN KEY (codigo_categoria) REFERENCES categoria(codigo),
 	FOREIGN KEY (codigo_pessoa) REFERENCES pessoa(codigo)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
