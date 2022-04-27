@@ -12,6 +12,7 @@ import java.util.Optional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.br.gestor.dto.LancamentoEstatisticaPessoa;
@@ -35,6 +36,11 @@ public class LancamentoService {
 	
 	@Autowired
 	private LancamentoRepository lancamentoRepository;
+	
+//	@Scheduled(cron = "")
+//	public void avisarSobreLancamentosVencidos() {
+//		System.out.println("----------------------------------------executando");
+//	}
 	
 	public byte[] relatorioPorPessoa(LocalDate inicio, LocalDate fim) throws JRException {
 		List<LancamentoEstatisticaPessoa> dados = lancamentoRepository.porPessoa(inicio, fim);

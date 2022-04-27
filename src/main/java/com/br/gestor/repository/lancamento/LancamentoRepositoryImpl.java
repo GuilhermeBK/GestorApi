@@ -51,6 +51,8 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery{
 		query.where(
 				builder.greaterThanOrEqualTo(root.get(Lancamento_.dataVencimento), primeiroDia),
 				builder.lessThanOrEqualTo(root.get(Lancamento_.dataVencimento), ultimoDia)
+			
+				//,builder.isNull(root.get(Lancamento_.dataPagamento)) aqui a filtragem dos registros sem data de pagamento
 				);
 		
 		query.groupBy(root.get(Lancamento_.tipo),root.get(Lancamento_.dataVencimento));
