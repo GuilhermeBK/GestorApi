@@ -21,8 +21,17 @@
 		<jasperreports-functions.version>6.17.0</jasperreports-functions.version>
 		<jasperreports-fonts.version>6.17.0</jasperreports-fonts.version>
 		
+		<aws-java-sdk.version>1.11.670</aws-java-sdk.version>
+		
+		
 	</properties>
 	<dependencies>
+
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk</artifactId>
+			<version>${aws-java-sdk.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

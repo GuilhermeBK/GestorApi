@@ -1,5 +1,8 @@
 package com.br.gestor.resource;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -31,7 +34,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.br.gestor.dto.Anexo;
 import com.br.gestor.dto.LancamentoEstatisticaCategoria;
 import com.br.gestor.dto.LancamentoEstatisticaDia;
 import com.br.gestor.event.RecursoCriadoEvent;
@@ -42,6 +47,7 @@ import com.br.gestor.repository.filter.LancamentoFilter;
 import com.br.gestor.repository.projection.ResumoLancamento;
 import com.br.gestor.service.LancamentoService;
 import com.br.gestor.service.exception.PessoaInexistenteOuInativaException;
+import com.br.gestor.storage.S3;
 
 @RestController
 @RequestMapping("/lancamentos")
@@ -58,6 +64,19 @@ public class LancamentoResource {
 	
 	@Autowired
 	private LancamentoService lancamentoService;
+	
+	@Autowired
+	private S3 s3;
+
+	@PostMapping("anexo")
+	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and hasAuthority('SCOPE_write')")
+	public Anexo uploadAnexo(@RequestParam MultipartFile anexo) throws IOException {
+		String nome = s3.salvarTemporariamente(anexo);
+		
+		return new Anexo(nome, s3.configurarUrl(nome));
+		
+		
+	}
 	
 	@GetMapping("/relatorios/por-pessoa")
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and hasAuthority('SCOPE_read')")
